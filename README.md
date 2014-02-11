@@ -1,4 +1,4 @@
-
+﻿
 #TP – Formation GIT
 
 ##Configuration 
@@ -114,8 +114,21 @@ Il est possible de vérifier le status du repository et de savoir quels sont les
 git status
 ```
 
+##Ignorer des fichiers
 
+Comme dans tous les SCM, il est possible d'exclure une liste de fichier du système de versionning. Pour cela il faut créer à la racine du projet un fichier `.gitignore`
 
+exemple de fichier : 
+
+```bash
+*.class
+*.jar
+*.war
+*.ear
+```
+Cet exemple permet d'ignorer tous les fichiers qui termine par .class, .jar etc.
+
+Un utilitaire très pratique permet de générer le fichier gitignore en fonction des technologies utilisé sur le projet. Disponible sur le site [Gitignore](http://www.gitignore.io/)
 
 
 ##Modification des fichiers
@@ -180,7 +193,7 @@ echo « - poivre noirs en grain» >> recette1.txt
 
 git add .
 ```
-
+ 
 Ajoutons maintenant les modifications à l'historique : 
 
 ```bash 
@@ -355,3 +368,288 @@ Pour remonter un ancien Tag il faut utiliser la commande `checkout` comme vu pr�
 ```bash
 git checkout v1.2
 ```
+
+### Supprimer un Tag
+
+```bash
+git tag -d v1.2
+```
+
+
+
+## Annuler une modification
+
+### Modification dans l'espace de travail 
+
+Cet exemple illustre comment annuler une modification présente dans l'espace de travail et qui n'est pas encore dans l'Index. 
+
+```bash
+
+git checkout master
+echo « --- modif --- » >> recette1.txt 
+
+git status
+
+```
+
+A cet étape git notifie que le fichier est modifier mais qu'il n'est pas dans l'Index. Pour annuler cette modification il suffit de faire un `checkout` de la dernière version du fichier : 
+```bash
+git checkout recette1.txt
+
+git status
+```
+
+### Modification dans l'index
+
+Pour annuler la modification d'un fichier déjà ajouté à l'index il faut utiliser la commande `reset`
+
+Exemple 
+
+```bash
+git checkout master
+echo « --- modif --- » >> recette1.txt 
+git add recette1.txt
+
+git status
+```
+
+Pour annuler avec la commande `reset` : 
+
+```bash
+git reset HEAD recette1.txt
+git status
+```
+
+Cette commande modifie l'index mais pas l'espace de travail. Pour modifier l'espace de travail il faut soit utiliser l'option `--hard` de la commande `reset`soit faire un `checkout`à la suite. Exemple : 
+```bash
+git checkout recette1.txt
+git status
+```
+
+
+### Modification présente dans l'historique
+
+Pour annuler une modification déjà commité il faut générer un commit qui annule le précédent. 
+
+```bash
+git revert HEAD
+```
+
+La commande `revert` génère un nouveau commit (avec un nouvel id) qui annule le dernier commit. Une autre façon de faire aurait été d'utiliser la commande `reset  --hard` avec l'id du commit sur lequel revenir. Cette dernière technique est a utiliser avec précaution et de préférence avec des branches locale. 
+
+### Modification du contenu d'un commit
+
+Avec Git il est possible de modifier le dernier commit. En modifiant le descriptif mais aussi le contenu. Pour cela il faut utiliser la commande `amed` 
+
+Exemple : 
+
+```bash
+echo « Ajout de a gousse d'ail » >> recette1.txt
+git add .
+Git commit -m 'Ajout ail'
+```
+
+Ooops, nous avons oublié dans le commit d'ajouter les oignons.
+
+```bash
+echo «Ajout des oignons» >> recette1.txt
+git add .
+git commit --amend -m 'Ajout ail et oignons'
+```
+
+## Déplacement et suppression de fichier
+
+### Déplacement / renommage 
+Git ne suit pas directement les mouvements des fichiers. Aucune méta-donnée indiquant le renommage n’est stockée par Git. Néanmoins, Git est assez malin pour s’en apercevoir après coup. Pour déplacer ou renommer un fichier il suffit : 
+
+```bash
+git mv recette1.txt recette1-bis.txt
+
+git status
+
+```
+
+### Suppression de fichier
+Pour effacer un fichier il faut l’éliminer des fichiers suivit par git ainsi que du système de fichier. La commande `git rm` réalise ces deux actions.
+
+```bash
+git rm recette1.tx
+```
+
+Une autre hypothèse est de vouloir supprimer un fichier du suivit de version, tout en le conservant dans votre espace de travail. C'est particulièrement utile quand vous avez oublié d'ajouter un fichier dans le `.gitignore`. C'est possible avec l'option `--cached` 
+
+```bash
+git rm –-cached recette1.txt
+```
+
+
+
+
+## Travailler avec les branches
+
+
+Comme tous les SCM Git propose un mécanisme de gestion des branches. Mais dans git l'utilisation de ce principe à été extrêmement simplifié et de nombreuse personne considère que c'est **la fonctionnalité** qui fait de git le meilleurs SCM. Git encourage à travailler avec les branches, en les créer les fusionner même plusieurs fois par jour.
+
+Git travaille sur une branche par défaut qui s'appelle `master`. Au fur et à mesure des validations, la branche master pointe vers le dernier des commits réalisés. À chaque validation, le pointeur de la branche master avance automatiquement.
+
+### Création d'une branche
+
+```bash
+git branch dev
+git status
+``` 
+
+Cette commande permet de créer une nouvelle branche « copie de la branche master ». Pour se positionner sur la nouvelle branche il faut utiliser la commande `git checkout dev`. Il existe une commande raccourcis qui permet de créer la branche et de se positionner dessus `git checkout -b dev`.
+
+### Lister les branches
+
+Il est possible de lister les branches  avec la commande `git branch -a` qui liste toutes les branches même les distantes. 
+
+Il est aussi possible de voir les branches ainsi que leur état d'avancement avec l'alias crée précédemment `git hist`.
+
+
+### Supression d'une branche
+
+L'otption `-D` permet de supprimer un branche locale. 
+
+```bash
+git branch -D dev
+```
+
+### Fusionnez les branches 
+
+Après avoir fait des modifications dans la branche de `dev` nous voulons intégrer ces modifications dans la branche principale `master` 
+
+Exemple : 
+
+```bash
+git checkout dev
+echo « Modif depuis branche dev » >> recette1.txt 
+git commit -a -m 'Modification depuis branche dev
+```
+
+Pour intégrer la modification dans la branche dev, il faut se positionner dessus puis appeler la commande `merge`
+
+```bash
+git checkout master
+git merge dev
+Updating f3603e0..6f830f4
+Fast-forward
+ recette1.txt |    2 ++
+ 1 file changed, 2 insertions(+)
+```
+
+Nous voyons que Git utilise un stratégie **Fast-forward**. Cela veut dire que le commit de la branche que l'on souhaite fusionner descends directement du commit avec lequel on souhaite le fusionner. C'est une fusion dite rapide car git doit seulement avancer le pointeur de la branche master. 
+
+
+Dans le cas d'une fusion d'une branche qui diverge de la branche initiale la stratégie sera dite **recursive**. C'est le cas si la branche `master` à continué à progresser indépendamment de la branche `dev`. Dans ce cas Git crée un nouveau commit pour qui Fusionne les branche. 
+
+Exemple : 
+
+```bash
+git checkout master
+
+vim recette1.txt # ajout d'une ligne à la fin du fichier
+git commit -a -m 'Modif 1 master' 
+
+vim recette1.txt # ajout d'une ligne à la fin du fichier
+git commit -a -m 'Modif 2 master' 
+
+git checkout dev
+
+vim recette1.txt # ajout d'une ligne au tout début du fichier
+git commit -a -m 'Modif 1 dev'
+
+git checkout master
+
+git merge dev
+Auto-merging recette1.txt
+Merge made by the 'recursive' strategy.
+ recette1.txt |    4 ++++
+ 1 file changed, 4 insertions(+)
+```
+
+Dans ce cas on voit apparaître un nouveau commit qui représente la fusion des deux branche 
+
+```
+dab755d - (HEAD, master) Merge branch 'dev' (5 minutes ago)
+```
+ 
+### Rebase / Merge
+
+Il existe une autre commande qui permet de faire la fusion entre deux branches. C'est la commande `rebase` qui fournit un résultat différent au niveau de arborescence. Il est important de noter qu'il ne faut jamais utiliser le `rebase` lorsque les commits sont déjà poussé sur une branche distante. A utiliser avec parcimonie.    
+
+
+## Gestion des conflits 
+
+Si vous avez modifié différemment la même partie d'un fichier dans deux branches différente il se peux que la fusion ne se passe pas bien. A la suite de la fusion les fichiers en conflits sont modifié avec les modifications des deux branche à l'intérieur et c'est au développeur de régler le conflit. 
+
+Exemple : 
+```bash
+git checkout master
+
+vim recette1.txt # ajout d'une modification ligne 5
+git commit -a -m 'Modif conflit 1 master' 
+
+git checkout dev
+
+vim recette1.txt # ajout d'une modification ligne 5
+git commit -a -m 'Modif conflit 1 dev'
+
+git checkout master
+
+git merge dev
+
+Auto-merging recette1.txt
+CONFLICT (content): Merge conflict in recette1.txt
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+A ce moment là le fichier est modifié dans l'espace de travail et il faut régler les conflit à la main. Le contenu du fichier doit ressembler à :
+
+```
+<<<<<<< HEAD
+Super modif master
+=======
+Super modif dev
+>>>>>>> dev
+``` 
+
+La première partie contient toutes les modification présente dans la branche courante (master dans notre cas) et la deuxième partie contient les modifications de la branche à fusionner. C'est ensuite au développeur d'arbitrer sur ce qu'il faut intégrer. 
+
+
+##Travailler avec des repo distant
+
+Git est un DSCM (Distributed Source Code Management) et il est nécessaire de partager une dépôt distant pour pouvoir collaborer avec d'autre développeur.  
+ 
+
+
+### Cloner un dépôt distant 
+
+Pour récupérer un dépôt distant il suffit de le cloner localement. 
+
+```bash
+git clone https://github.com/fabienamico/Formation-Git.git
+```
+
+Lorsque l'on clone un dépôt distant, git crée un dépôt local avec en plus de la branche master la branche `remotes/origin/master` qui représente le master distant. 
+
+Pour lister les branches distantes il est possible d'utiliser comme précédemment `git brach -v`ou bien `git remote -vn
+
+### Suivre l'évolution d'un dépôt 
+```bash
+git fetch origin
+```  
+
+Cette commande va récupérer toutes les branches disponible sur le repo distant et les copier en locale. Cette commande de modifie pas l'espace de travail local. Il faut ensuite faire un merge pour avoir le repo distant dans la branche  master locale. 
+
+Pour récupérer l'ensemble du repo distant et le fusionner « automatiquement » avec les branche locale, il faut utiliser la commande 
+
+```bash
+git pull origin
+```
+
+### Envoyer ces modif sur le repo distant 
+
+Pour pousser les modifications sur un repo distant il faut dans un premier temps s'assurer qu'il n'y a pas de modification plus récente sur celui-ci. Cela ce fait avec un `git pull`
+
