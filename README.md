@@ -12,7 +12,7 @@ git config --global user.email "john.doe@whatever.com"
 ```
 ###Configuration de la fin de ligne
 
-C'est une configuration utile surtout pour les utilisateurs Windows. Cela permet de s'assurer que les fichiers se terminent localement par CRLF (pour qu'ils puissent être correctement ouverts dans Notepad par exemple) et que les fichiers se terminent par LF dans le repository. 
+C'est une configuration qui est utile surtout pour les utilisateurs Windows. Cela permet de s'assurer que les fichiers se terminent localement par CRLF (pour qu'ils puissent être correctement ouverts dans Notepad par exemple) et que les fichiers se terminent par LF dans le repository. 
 
 **Utilisateur Linux / OSX**
 
@@ -40,20 +40,13 @@ git config --global color.ui true
 git config --global core.editor vim
 ```
 
-
-
-
-
-
-
-
 ## Création d'un projet
 
 L'objectif est d'utiliser le versioning avec Git sur un nouveau projet. 
 
 ### Initialisation du projet
 
-Dans un premier temps, nous allons créer les répertoires et les fichiers qui vont servir comme base de projet.
+Dans un premier temps, nous allons créer les répertoires et les fichiers qui vont servir comme base de notre projet.
 
 ```bash
 mkdir projet-recette-cuisine
@@ -84,31 +77,31 @@ drwxr-xr-x   ... refs/
 
 ## Ajout des fichiers au repository 
 
-Il est important de comprendre que Git gère les fichiers dans trois états différents avec un espace de travail spécifique pour chacun des états. Les fichiers peuvent se trouver dans :
+Il est important de comprendre que Git gère des fichiers dans trois états différents avec un espace de travail spécifique pour chacun des états. Les fichiers peuvent se trouver dans :
 *	Le répertoire de travail
 *	L'index
 *	L'historique
 
 **Le répertoire de travail** : comme son nom l'indique, c'est le répertoire de travail où l'on crée, modifie, supprime les fichiers et répertoires. Tous les fichiers à ce niveau, ne font pas forcément partie de Git. 
 
-**L'index** : c'est à cet endroit que se trouvent les fichiers à commiter. 
+**L'index** : contient tous les fichiers à commiter. 
 
-**L'hystorique** : correspond aux fichiers commités et versionnés par Git. 
+**L'historique** : correspond aux fichiers commités et versionnés par Git. 
 
-Pour faire passer un fichier du répertoire de travail à l'index : 
+Pour faire passer un fichier du répertoire de travail vers l'index : 
 ```bash
 git add recette1.txt
 ```
 
-Pour faire passer un fichier de l'index à l'historique :
+Pour faire passer un fichier de l'index vers l'historique :
 ```bash
 git commit -m "Premier commit"
 ```
 
 
-## Vérification du status
+## Vérification du statut
 
-Il est possible de vérifier le status du repository et voir les fichiers modifiés. Il est également possible de voir les fichiers qui seront ajoutés au prochain commit.
+Il est possible de vérifier le statut du repository et voir la liste des fichiers modifiés. Il est également possible de voir tous les fichiers qui seront ajoutés au prochain commit.
 
 ```bash
 git status
@@ -128,7 +121,7 @@ Exemple de fichier :
 ```
 Cet exemple permet d'ignorer tous les fichiers qui terminent par .class, .jar, etc.
 
-Un utilitaire très pratique permet de générer le fichier .gitignore en fonction des technologies utilisées sur le projet. Cet utilitaire est disponible sur le site [Gitignore](http://www.gitignore.io/)
+Il existe un utilitaire très pratique qui permet de générer le fichier .gitignore en fonction des technologies utilisées sur le projet. Il est disponible sur le site [Gitignore](http://www.gitignore.io/)
 
 
 ##Modification des fichiers
@@ -145,14 +138,12 @@ echo « - légumes divers» >> recette1.txt
 
 ```
 
-###Vérification du status
+###Vérification du statut
 
 ```bash
 git status
 ```
 A cette étape, le fichier est modifié et les modifications n'ont pas été ajoutées à l'index. 
-
-
 
 
 ### Ajout des modifications à l'index
@@ -168,28 +159,25 @@ Pour ajouter tous les fichier à l'index (même effet dans notre cas)
 git add .
 ```
 
-La commande `add` permet d'ajouter les modifications à l'index et de préciser à Git que le fichier à été modifié. Cependant, les modifications ne sont pas enregistrées de façon permanente, pour cela il faut passer le fichier dans l'historique. 
+La commande `add` permet d'ajouter les modifications à l'index et de préciser à Git que le fichier à été modifié. Cependant, ces modifications ne sont pas enregistrées de façon permanente, pour cela il faut passer le fichier dans l'historique. 
 
-### De l'index à l'historique 
+### De l'index vers l'historique 
 
-Pour ajouter la modification de façon permanente, il faut faire un `commit` des fichiers précédemment ajoutés à l'index.  
+Pour ajouter les modifications de façon permanente, il faut faire un `commit` des fichiers précédemment ajoutés à l'index.  
 
 ```bash
 git commit -m 'Ajout des ingrédients'
 ```
 
-
-
-
 ## La commande commit 
 
-Dans Git, il est impossible de faire un commit sans y ajouter un commentaire. Cela permet de garder un historique clair est simple à parcourir. L'option `-m` de la commande `commit`permet d'ajouter ce commentaire dans la même commande. 
+Dans Git, il est impossible de faire un commit sans y ajouter un commentaire. Cela permet de garder un historique clair et simple à parcourir. L'option `-m` de la commande `commit`permet d'ajouter ce commentaire dans la même commande. 
 
-Ajoutons d'autres ingrédient à notre fameuse recette : 
+Ajoutons d'autres ingrédients à notre fameuse recette du pot au feu : 
 
 ```bash
 echo « - gros sel» >> recette1.txt
-echo « - poivre noirs en grain» >> recette1.txt
+echo « - poivre noir en grain» >> recette1.txt
 
 git add .
 ```
@@ -199,12 +187,12 @@ Ajoutons maintenant les modifications à l'historique :
 ```bash 
 git commit
 ```
-Cette commande va ouvrir l'éditeur de texte par défaut et permettre à l'utilisateur d'ajouter un commentaire plus long. Un commentaire Git est constitué d'une première ligne qui contient au maximum 50 caractères. Cette phrase peut être suivie d'un saut de ligne et de tous les détails nécessaires pour préciser l'objet de la modification. 
+Cette commande va ouvrir l'éditeur de texte par défaut et permettre à l'utilisateur d'ajouter un commentaire plus long. Un commentaire Git est constitué d'une première ligne contenant au maximum 50 caractères. Cette phrase peut être suivie d'un saut de ligne et de tous les détails nécessaires pour préciser l'objet de la modification. 
 
 
 ## Suivi des modifications, mais pas des fichiers
 
-Contrairement au SCM classique, Git s'intéresse aux modifications faites à l'intérieur des fichiers et non pas aux fichiers eux-mêmes. C'est-à-dire que quand nous faisons un `git add recette1.txt`, on ne demande pas l'ajout de ce fichier à l'index mais **l'ajout de l'état de ce fichier à l'index**. Le fichier pourra donc être ajouté à l'historique dans cet état, même s'il à été modifié par la suite. 
+Contrairement aux SCM classiques, Git s'intéresse aux modifications faites à l'intérieur des fichiers et non pas aux fichiers eux-mêmes. C'est-à-dire que quand nous faisons un `git add recette1.txt`, on ne demande pas l'ajout de ce fichier à l'index mais **l'ajout de l'état de ce fichier à l'index**. Le fichier pourra donc être ajouté à l'historique dans cet état, même s'il à été modifié par la suite. 
 
 ### Illustration  
 
@@ -221,9 +209,9 @@ Nous allons à présent faire une deuxième modification :
 echo «Épluchez les carottes, les poireaux et la branche de céleri, puis lavez-les.» >> recette1.txt
 ```
 
-Nous pouvons vérifier le status `git status`
+La commande `git status` permet de vérifier le statut de nos fichiers.
 
-Il faut noter que le fichier `recette1.txt` apparaît deux fois. Une première fois dans la rubrique « Change to committed » qui représente les fichiers dans l'index, avec dans notre cas la première modification. Le fichier apparaît également une deuxième fois dans « Changes not staged for commit » qui contient la deuxième modification. Les deux modifications peuvent maintenant faire partie de deux commit différents. 
+Le fichier `recette1.txt` apparaît alors deux fois dans le statut. Une première fois dans la rubrique « Change to committed » qui représente les fichiers présents dans l'index, avec dans notre cas la première modification. Le fichier apparaît également une deuxième fois au niveau de la rubrique « Changes not staged for commit » qui contient la deuxième modification. Les deux modifications peuvent maintenant faire partie de deux commits différents. 
 
 ```bash
 git commit -m « Ficelez la viande»
@@ -270,7 +258,7 @@ git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(
 
 
 
-##Les Alias
+##Les alias
 
 Git fournit la possibilité de créer des alias pour simplifier l’utilisation de certaines commandes. 
 La création d'alias se fait soit dans le fichier `$HOME/.gitconfig`, soit dans la configuration du projet dans le fichier `.git/config`.
@@ -307,9 +295,9 @@ Cette commande permet de récupérer le fichier recette1.txt. dans l'espace de t
 git checkout HEAD~3 
 ```
 
-Quand aucun nom de fichier n'est donné, et que la référence n'est pas une banche (locale) on se retrouve avec une branche anonyme appelée une detached HEAD. Ceci est utile pour se déplacer rapidement dans l'histoire. Supposons que vous souhaitiez compiler la version 1.6.6.1 de Git, vous pouvez faire un git checkout v1.6.6.1 (qui est un tag, et non une branche), compiler, installer, et rebasculer sur une autre branche avec par exemple git checkout master. 
+Quand aucun nom de fichier n'est donné et que la référence n'est pas une banche (locale), on se retrouve avec une branche anonyme appelée une detached HEAD. Cela est utile pour se déplacer rapidement dans l'historique. Supposons que vous souhaitiez compiler la version 1.6.6.1 de Git, vous pouvez faire un git checkout v1.6.6.1 (qui est un tag, et non une branche), compiler, installer, et rebasculer sur une autre branche avec la commande git checkout master. 
 
-Attention, dans le cas d'une detached HEAD, les commits n'étant pas attachés à une véritable branche, ils peuvent être perdus au changement de branche. 
+Attention, dans le cas d'une detached HEAD, les commits n'étant pas attachés à une véritable branche, ils peuvent être perdus au moment du changement de branche. 
 
 
 ```bash
@@ -322,40 +310,40 @@ Cette commande force la création d'une nouvelle branche et permet de ne pas se 
 
 La commande `reset' permet de restaurer l'index et l'espace de travail. Elle est également utilisée pour copier des fichiers depuis l'historique vers l'index, sans toucher à l'espace de travail . 
 
-Si un commit est passé en argument, sans nom de fichier, la branche courante est déplacée vers ce commit, et le stage est mis à jour pour correspondre à ce commit. Si l'option –hard est passée en argument, la working copy est aussi mise à jour. Si l'option –soft est passée en argument, aucun des deux n'est mis à jour. 
+Si un commit est passé en argument sans nom de fichier, la branche courante est déplacée vers ce commit, et le stage est mis à jour pour correspondre à ce commit. Si l'option –hard est passée en argument, la working copy est aussi mise à jour. Si l'option –soft est passée en argument, aucun des deux n'est mis à jour. 
 
 ```bash
 git reset --hard HEAD~3 
 ```
 
 
-## Les Tags et versions
+## Les tags et versions
 
-L'objectif des Tags est d'associer un nom à un commit important pour pouvoir le retrouver plus facilement. Généralement, les gens utilisent cette fonctionnalité pour marquer les états de publication (v1.0 et ainsi de suite) 
+L'objectif des tags est d'associer un nom à un commit important afin de le retrouver plus facilement. Généralement, les gens utilisent cette fonctionnalité pour marquer les états de publication (V1.0 par exemple). 
 
-### Création d'un Tag
+### Création d'un tag
 
 ```bash
-git tag -a v1.0 -m 'Version 1.0 déployer en Prod' 
+git tag -a v1.0 -m 'Version 1.0 à déployer en Prod' 
 ```
 
-L’option `-m` permet de spécifier le message de balisage qui sera stocké avec la balise. Si vous ne spécifiez pas de message en ligne pour une balise annotée, Git lance votre éditeur pour pouvoir le saisir. 
+L’option `-m` permet de spécifier le message de balisage qui sera stocké avec la balise. Si vous ne spécifiez pas de message en ligne, Git lance automatiquement votre éditeur par défaut pour pouvoir le saisir. 
 
-### Création d'un Tag avec un ancien commit
+### Création d'un tag avec un ancien commit
 
 ```bash
 git tag -a v1.2 9 fceb02 
 ```
 
-### Lister les Tags
+### Lister les tags
 
 ```bash
 git tag
 ```
 
-Cette commande liste les Tags dans l’ordre alphabétique. L’ordre dans lequel elles apparaissent n’a pas de rapport avec l’historique. 
+Cette commande liste les tags dans l’ordre alphabétique. L’ordre dans lequel ils apparaissent n’a pas de rapport avec l’historique. 
 
-Il est possible de lister les Tags et de filtrer l'affichage :
+Il est possible de lister les tags et de filtrer l'affichage :
 
 ```bash
 git tag -l 'v1.4.2.*'
@@ -363,13 +351,13 @@ git tag -l 'v1.4.2.*'
 
 ### Récupérer un ancien tag
 
-Pour remonter un ancien Tag, il faut utiliser la commande `checkout` comme vu précédement. 
+Pour remonter un ancien Tag, il faut utiliser la commande `checkout`, comme vu précédement. 
 
 ```bash
 git checkout v1.2
 ```
 
-### Supprimer un Tag
+### Supprimer un tag
 
 ```bash
 git tag -d v1.2
@@ -392,7 +380,7 @@ git status
 
 ```
 
-A cette étape, Git nous précise que le fichier est modifié mais qu'il n'est pas dans l'index. Pour annuler cette modification, il suffit de faire un `checkout` de la dernière version du fichier : 
+A cette étape, Git nous précise que le fichier est modifié mais qu'il n'est pas encore présent dans l'index. Pour annuler cette modification, il suffit de faire un `checkout` de la dernière version du fichier : 
 
 ```bash
 git checkout recette1.txt
@@ -402,7 +390,7 @@ git status
 
 ### Modification dans l'index
 
-Pour annuler la modification d'un fichier déjà ajouté à l'index, il faut utiliser la commande `reset`
+Pour annuler la modification d'un fichier déjà ajouté à l'index, il faut utiliser la commande `reset`.
 
 Exemple :
 
@@ -414,7 +402,7 @@ git add recette1.txt
 git status
 ```
 
-Pour annuler avec la commande `reset` : 
+Pour faire une annulation, on utilise la commande `reset` : 
 
 ```bash
 git reset HEAD recette1.txt
@@ -437,16 +425,16 @@ Pour annuler une modification déjà commitée, il faut générer un commit qui 
 git revert HEAD
 ```
 
-La commande `revert` génère un nouveau commit (avec un nouvel id) qui annule le dernier commit. Une autre façon de faire, aurait été d'utiliser la commande `reset  --hard` avec l'id du commit sur lequel on souhaite revenir. Cette deuxième technique est à utiliser avec précaution et de préférence avec des branches locales. 
+La commande `revert` génère un nouveau commit (avec un nouvel id) qui annule le précédent. Une autre façon de faire, aurait été d'utiliser la commande `reset  --hard` avec l'id du commit sur lequel on souhaite revenir. Cette deuxième technique est à utiliser avec précaution et de préférence sur des branches locales. 
 
 ### Modification du contenu d'un commit
 
-Avec Git, il est possible de modifier le dernier commit et cela en modifiant le descriptif, mais également le contenu. Pour cela, il faut utiliser la commande `amed` 
+Avec Git, il est possible de modifier le dernier commit et cela en modifiant son descriptif et également son contenu. Pour cela, il faut utiliser la commande `amed` 
 
 Exemple : 
 
 ```bash
-echo « Ajout de a gousse d'ail » >> recette1.txt
+echo « Ajout de la gousse d'ail » >> recette1.txt
 git add .
 Git commit -m 'Ajout ail'
 ```
@@ -478,21 +466,18 @@ Pour effacer un fichier, il faut l’éliminer des fichiers suivis par Git, ain
 git rm recette1.tx
 ```
 
-Une autre situation est de vouloir supprimer un fichier du suivi de version, tout en le conservant dans l'espace de travail. Cela est particulièrement utile lorsqu'on a oublié d'ajouter un fichier dans le `.gitignore`. Cette modification est possible grâce à l'option `--cached` 
+Une autre situation est de vouloir supprimer un fichier du suivi de version, tout en le conservant dans l'espace de travail. Cela est particulièrement utile lorsqu'on a oublié d'ajouter un fichier dans le `.gitignore`. Cette modification est possible grâce à l'option `--cached`. 
 
 ```bash
 git rm –-cached recette1.txt
 ```
 
-
-
-
 ## Travailler avec les branches
 
 
-Comme tous les SCM, Git propose un mécanisme de gestion des branches. La différence est qu'avec Git l'utilisation de ce principe à été extrêmement simplifiée et de nombreuses personnes considèrent qu'il s'agit de **la fonctionnalité** qui fait de Git le meilleur SCM. Git favorise le travail avec les branches en permettant leur création et leur fusion rapidement et simplement, et cela même plusieurs fois par jour.
+Comme tous les SCM, Git propose un mécanisme de gestion des branches. La différence est qu'avec Git l'utilisation de ce principe a été extrêmement simplifiée et de nombreuses personnes considèrent qu'il s'agit de **la fonctionnalité** qui fait de Git le meilleur SCM. Git favorise le travail avec les branches en permettant leur création et leur fusion rapidement et simplement, et cela même plusieurs fois par jour.
 
-Git travaille, par défaut, sur une branche appelée `master`. Au fur et à mesure des validations, la branche master pointe vers le dernier des commits effectué. À chaque validation, le pointeur de la branche master avance automatiquement.
+Git travaille, par défaut, sur une branche appelée `master`. Au fur et à mesure des validations, la branche master pointe vers le dernier des commits effectué. À chaque validation, le pointeur de la branche master avance automatiquemnt.
 
 ### Création d'une branche
 
@@ -501,13 +486,13 @@ git branch dev
 git status
 ``` 
 
-Cette commande permet de créer une nouvelle branche qui sera une « copie de la branche master ». Pour se positionner sur la nouvelle branche, il suffit d'utiliser la commande `git checkout dev`. Il existe un raccourci qui permet de créer la branche et de se positionner dessus instantanément `git checkout -b dev`.
+Cette commande permet de créer une nouvelle branche qui sera une « copie de la branche master ». Pour se positionner sur la nouvelle branche, il suffit d'utiliser la commande `git checkout dev`. Le raccourci `git checkout -b dev` permet de créer la branche et de se positionner dessus instantanément.
 
 ### Lister les branches
 
-Il est possible de lister les branches avec la commande `git branch -a` qui liste toutes les branches, même les branches distantes. 
+Il est possible de lister les branches avec la commande `git branch -a` qui affiche toutes les branches, y compris les branches distantes. 
 
-Il est également possible de voir les branches ainsi que leur état d'avancement grâce à l'alias crée précédemment `git hist`.
+Il est également possible de voir les branches avec leur état d'avancement grâce à l'alias crée précédemment `git hist`.
 
 
 ### Supression d'une branche
@@ -520,7 +505,7 @@ git branch -D dev
 
 ### Fusionner des branches 
 
-Après avoir fait des modifications dans la branche de `dev`, nous voulons intégrer ces modifications sur la branche principale `master` 
+Après avoir fait des modifications sur la branche `dev`, nous voulons intégrer ces modifications sur la branche principale `master` 
 
 Exemple : 
 
@@ -579,12 +564,12 @@ dab755d - (HEAD, master) Merge branch 'dev' (5 minutes ago)
  
 ### Rebase / Merge
 
-Il existe une autre commande qui permet de faire la fusion entre deux branches, il s'agit de la commande `rebase` qui fournit un résultat différent au niveau de l'arborescence. Il est important de noter qu'il ne faut jamais utiliser le `rebase` lorsque les commits ont déjà été poussés sur une branche distante. Cette commande est donc à utiliser avec parcimonie.    
+La commande `rebase` permet également de faire la fusion entre deux branches,mais avec un résultat différent au niveau de l'arborescence. Il est important de noter qu'il ne faut jamais utiliser le `rebase` lorsque les commits ont déjà été poussés sur une branche distante. Cette commande est donc à utiliser avec parcimonie.    
 
 
 ## Gestion des conflits 
 
-Si vous avez modifié différemment la même partie d'un fichier mais sur deux branches différentes, il se peut que la fusion ne se passe pas très bien. A la suite de la fusion, les fichiers en conflit sont modifiés avec les modifications des deux branches, c'est alors au développeur de régler le conflit et de choisir les modifications à appliquer. 
+Si vous avez modifié différemment la même partie d'un fichier mais sur deux branches différentes, il se peut que la fusion ne soit pas simple. A la suite de la fusion, les fichiers en conflit sont modifiés avec les modifications des deux branches, c'est alors au développeur de régler le conflit et de choisir les modifications à appliquer. 
 
 Exemple : 
 ```bash
@@ -643,7 +628,7 @@ Pour lister les branches distantes, on utilise la commande `git brach -v` ou bie
 git fetch origin
 ```  
 
-Cette commande va récupérer toutes les branches disponibles sur le repo distant et les copier en local. Cette commande ne modifie pas l'espace de travail local. Il faut ensuite faire un merge pour avoir le repo distant dans la branche  master locale. 
+Cette commande va récupérer toutes les branches disponibles sur le repo distant et les copier en local. La commande ne modifie pas l'espace de travail local. Il faut ensuite faire un merge pour avoir le repo distant dans la branche master locale. 
 
 Pour récupérer l'ensemble du repo distant et le fusionner « automatiquement » avec les branches locales, il faut utiliser la commande 
 
