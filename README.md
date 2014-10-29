@@ -639,5 +639,5 @@ git pull origin
 
 ### Envoyer ces modifs sur le repo distant 
 
-Pour pousser les modifications sur un repo distant, il faut dans un premier temps s'assurer qu'il n'y a pas de modifications plus récentes sur celui-ci. Cela se fait ensuite avec un `git pull`.
+Pour pousser les modifications sur un repo distant, il faut dans un premier temps s'assurer qu'il n'y a pas de modifications plus récentes sur celui-ci. Cela se fait ensuite avec un `git pull`. Pour pousser le code sur un repo distant, cela se fait alors avec un `git push`.
 
