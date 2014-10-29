@@ -6,6 +6,7 @@
 
 Une des premières étapes est la configuration du nom et de l'email de l'utilisateur Git. C'est cet email qui apparaîtra ensuite dans tous les commits et qui servira à identifier l'utilisateur. 
 
+
 ```bash
 git config --global user.name "John DOE"
 git config --global user.email "john.doe@whatever.com"
