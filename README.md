@@ -256,7 +256,7 @@ git log --pretty=oneline --all
 ```bash
 git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 ```
-
+gitk est un outil graphique qu'il peut être intéressant d'utiliser
 
 
 ##Les alias
